@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Currency Convertor</string>
+    <string name="hello_world">Currency Convertor</string>
+    <string name="action_settings">Settings</string>
+    <string name="currency1">currency1</string>
+    <string name="currency2">currency2</string>
+    <string name="currency3">currency3</string>
+    <string name="currency4">currency4</string>
+    <string name="currency5">currency5</string>
+    <string name="list_view_title">Currency Listing</string>
+    <string name="next_btn"> next button </string>
+    <string name="country">China></string>
+</resources>

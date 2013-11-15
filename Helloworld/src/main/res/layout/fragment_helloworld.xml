@@ -1,0 +1,103 @@
+<FrameLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton1"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency1"
+        android:src="@drawable/hkd_flag"
+        android:onClick="onClick" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton2"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency2"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/usd_flag"
+        android:onClick="onClick" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton3"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency3"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/jpy_flag"
+        android:onClick="onClick" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton4"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency4"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/gbp_flag"
+        android:onClick="onClick" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton5"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency5"
+        android:layout_marginTop="200dp"
+        android:src="@drawable/bgn_flag"
+        android:onClick="onClick" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText1"
+        android:layout_gravity="right|top" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="50dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText3"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="100dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText4"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="150dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText5"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="200dp" />
+</FrameLayout>

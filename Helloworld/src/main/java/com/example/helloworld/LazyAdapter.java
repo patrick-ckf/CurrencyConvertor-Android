@@ -3,6 +3,7 @@ package com.example.helloworld;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,47 +29,48 @@ public class LazyAdapter extends BaseAdapter {
     }
 
     public String currencyToCountry(String currency) {
-        if (currency.equals("HKD")) return "Hong Kong";
-        else if (currency.equals("USD")) return "USA";
-        else if (currency.equals("BGN")) return "Bulgarian";
+        if (currency.equals("USD")) return "USA";
+        else if (currency.equals("JPY")) return "Japan";
+        else if (currency.equals("BGP")) return "Bulgarian";
         else if (currency.equals("CZK")) return "Czech";
         else if (currency.equals("DKK")) return "Denmark";
-        else if (currency.equals("GDP")) return "United Kingdom";
+        else if (currency.equals("GBP")) return "United Kingdom";
         else if (currency.equals("HUF")) return "Hungary";
-        else if (currency.equals("LTF")) return "lithuania";
+        else if (currency.equals("LTL")) return "lithuania";
         else if (currency.equals("LVL")) return "Latvia";
         else if (currency.equals("PLN")) return "Poland";
         else if (currency.equals("RON")) return "Romania";
         else if (currency.equals("SEK")) return "Sweden";
         else if (currency.equals("CHF")) return "Switzerland";
         else if (currency.equals("NOK")) return "Norway";
+        else if (currency.equals("HRK")) return "Croatia";
         else if (currency.equals("RUB")) return "Russia";
         else if (currency.equals("TRY")) return "Turkey";
         else if (currency.equals("AUD")) return "Australia";
         else if (currency.equals("BRL")) return "Brazil";
         else if (currency.equals("CAD")) return "Canada";
         else if (currency.equals("CNY")) return "Republic of China";
+        else if (currency.equals("HKD")) return "Hong Kong";
         else if (currency.equals("IDR")) return "India";
         else if (currency.equals("ILS")) return "Israeli";
         else if (currency.equals("INR")) return "India";
         else if (currency.equals("KRW")) return "South Korea";
-        else if (currency.equals("MSN")) return "Mexico";
-        else if (currency.equals("MYN")) return "Turkey";
+        else if (currency.equals("MXN")) return "Mexico";
+        else if (currency.equals("MYR")) return "Turkey";
         else if (currency.equals("NZD")) return "New Zealand";
         else if (currency.equals("PHP")) return "Philippines ";
         else if (currency.equals("SGD")) return "Singapore";
         else if (currency.equals("THB")) return "Thailand";
         else if (currency.equals("ZAR")) return "South Africa";
-        else if (currency.equals("ISK")) return "Iceland";
-        else if (currency.equals("JPY")) return "Japan";
         else return null;
     }
 
     public Drawable getDrawableByCurrency(String currency) {
-        Drawable drawable;
-        String str = currency.toLowerCase()+"_flag";
-        Log.d("Helloworld", str);
-        drawable = activity.getResources().getDrawable(activity.getResources().getIdentifier(str, "drawable", activity.getPackageName()));
+        Drawable drawable = null;
+        String str = currency.toLowerCase(Locale.ENGLISH)+"_flag";
+        Log.e(activity.getString(R.string.app_name), str);
+        if (str != null)drawable = activity.getResources().getDrawable(activity.getResources().getIdentifier(str, "drawable", activity.getPackageName()));
+        Log.e(activity.getString(R.string.app_name), drawable.toString());
         return drawable;
     }
 
@@ -98,6 +100,7 @@ public class LazyAdapter extends BaseAdapter {
         // Setting all values in listview
         country.setText(currencyToCountry(currency.get("Country")));
         String str = "1 EUR to " + currency.get("Rate") + " " + currency.get("Country");
+        Log.e(activity.getString(R.string.app_name), str);
         rate.setText(str);
         thumb_image.setImageDrawable(getDrawableByCurrency(currency.get("Country")));
         return vi;

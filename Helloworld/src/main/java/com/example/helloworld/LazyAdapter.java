@@ -12,11 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class LazyAdapter extends BaseAdapter {
+public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
 
     private Activity activity;
     private ArrayList<HashMap<String, String>> data;
@@ -24,7 +25,7 @@ public class LazyAdapter extends BaseAdapter {
 
     public LazyAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
         activity = a;
-        data=d;
+        data = d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -103,6 +104,27 @@ public class LazyAdapter extends BaseAdapter {
         Log.e(activity.getString(R.string.app_name), str);
         rate.setText(str);
         thumb_image.setImageDrawable(getDrawableByCurrency(currency.get("Country")));
+        vi.setOnClickListener(new OnItemClickListener(position));
         return vi;
     }
+
+    @Override
+    public void onClick(View view) {
+        Log.v(activity.getString(R.string.app_name), "Row button clicked");
+    }
+
+    private class OnItemClickListener implements View.OnClickListener {
+        private int mPosition = 0;
+
+        OnItemClickListener(int position) {
+            mPosition = position;
+        }
+
+        @Override
+        public void onClick(View view) {
+            CurrencyTableActivity act = (CurrencyTableActivity)activity;
+            act.onItemClick(mPosition);
+        }
+
+    };
 }

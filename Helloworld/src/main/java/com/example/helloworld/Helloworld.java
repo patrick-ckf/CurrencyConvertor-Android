@@ -20,8 +20,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Helloworld extends ActionBarActivity {
-
+    private int mSelected = -1;
     private Map<String, Float> CurrencyMapping = new HashMap<String,Float>();
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (data != null) {
+                Bundle a = data.getExtras();
+                mSelected = a.getInt("selectedItem");
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +45,12 @@ public class Helloworld extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+        Bundle extra = getIntent().getExtras();
+        if (extra != null) {
+            mSelected = extra.getInt("selectedItem");
+        }
+
         new CurrencyXMLParser().execute("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
     }
 
@@ -46,6 +63,7 @@ public class Helloworld extends ActionBarActivity {
     }
 
     public void onClick(View view) {
+        view.getDrawingTime();
         Intent intent = new Intent(this, CurrencyTableActivity.class);
         if (this.CurrencyMapping != null && this.CurrencyMapping.size() > 0)
             intent.putExtra("hashMap", (HashMap<String, Float>)this.CurrencyMapping);
@@ -87,9 +105,7 @@ public class Helloworld extends ActionBarActivity {
 
         private Map<String, Float> CurrencyMapping = new HashMap<String,Float>();
 
-        public Map<String, Float> getCurrencyMap() {
-            return CurrencyMapping;
-        }
+        //public Map<String, Float> getCurrencyMap() { return CurrencyMapping; }
 
         private void insertCurrencyToMap(Map<String,String> attributes) {
             if (attributes != null) {

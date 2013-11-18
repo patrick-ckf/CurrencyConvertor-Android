@@ -3,6 +3,7 @@ package com.example.helloworld;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CurrencyTableActivity extends Activity {
+    public ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
+
     public void onCreate(Bundle savedInstanceState) {
         HashMap<?, ?> hashMap = null;
         LazyAdapter adapter;
@@ -28,7 +31,6 @@ public class CurrencyTableActivity extends Activity {
                hashMap = (HashMap) object;
             }
         }
-        ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
 
         if (hashMap !=null && hashMap.size() > 0) {
             for (Map.Entry<?, ?> entry : hashMap.entrySet())
@@ -39,7 +41,14 @@ public class CurrencyTableActivity extends Activity {
                 mylist.add(map);
             }
         }
-        adapter=new LazyAdapter(this, mylist);
+        adapter = new LazyAdapter(this, mylist);
         list.setAdapter(adapter);
+    }
+
+    public void onItemClick(int mPosition) {
+        Intent data = new Intent(this, Helloworld.class);
+        data.putExtra("selectedItem", mPosition);
+        setResult(RESULT_OK, data);
+        startActivityForResult(data, RESULT_OK);
     }
 }

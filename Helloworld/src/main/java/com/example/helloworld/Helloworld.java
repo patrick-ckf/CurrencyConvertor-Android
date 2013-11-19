@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -17,22 +18,14 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Helloworld extends ActionBarActivity {
-    private int mSelected = -1;
     private Map<String, Float> CurrencyMapping = new HashMap<String,Float>();
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (data != null) {
-                Bundle a = data.getExtras();
-                mSelected = a.getInt("selectedItem");
-            }
-        }
-    }
+    String selectedItem;
+    private int btnSelected = -1;
+    PlaceholderFragment fragment = new PlaceholderFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +35,18 @@ public class Helloworld extends ActionBarActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, fragment)
                     .commit();
+            Bundle extra = getIntent().getExtras();
+            if (extra != null) {
+                selectedItem = extra.getString("selectedItem");
+                btnSelected = extra.getInt("btnSelected");
+            }
+            if (fragment != null) {
+                fragment.setSelectedItem(selectedItem);
+                fragment.setBtnSelected(btnSelected);
+            }
         }
-
-        Bundle extra = getIntent().getExtras();
-        if (extra != null) {
-            mSelected = extra.getInt("selectedItem");
-        }
-
         new CurrencyXMLParser().execute("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
     }
 
@@ -63,10 +59,32 @@ public class Helloworld extends ActionBarActivity {
     }
 
     public void onClick(View view) {
-        view.getDrawingTime();
+        int id = view.getId();
+        switch (id) {
+            case R.id.imageButton1:
+                btnSelected = 0;
+                break;
+            case R.id.imageButton2:
+                btnSelected = 1;
+                break;
+            case R.id.imageButton3:
+                btnSelected = 2;
+                break;
+            case R.id.imageButton4:
+                btnSelected = 3;
+                break;
+            case R.id.imageButton5:
+                btnSelected = 4;
+                break;
+            default:
+                break;
+        }
         Intent intent = new Intent(this, CurrencyTableActivity.class);
+        Bundle Extras = new Bundle();
         if (this.CurrencyMapping != null && this.CurrencyMapping.size() > 0)
-            intent.putExtra("hashMap", (HashMap<String, Float>)this.CurrencyMapping);
+            Extras.putSerializable("hashMap", (HashMap<String, Float>) this.CurrencyMapping);
+        Extras.putInt("btnSelected", btnSelected);
+        intent.putExtras(Extras);
         startActivity(intent);
     }
 
@@ -90,6 +108,17 @@ public class Helloworld extends ActionBarActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+        String mSelectedItem;
+        int mBtnSelected = -1;
+
+        public void setSelectedItem(String str){
+            mSelectedItem = str;
+        }
+
+        public void setBtnSelected(int btn) {
+            mBtnSelected = btn;
+        }
+
 
         public PlaceholderFragment() {
         }
@@ -98,6 +127,41 @@ public class Helloworld extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             return inflater.inflate(R.layout.fragment_helloworld, container, false);
+        }
+
+        @Override
+        public void onActivityCreated(Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+            String str;
+            int drawable = -1;
+            ImageButton btn = null;
+            if (mSelectedItem != null) {
+                str = mSelectedItem.toLowerCase(Locale.ENGLISH)+"_flag";
+                drawable = getActivity().getResources().getIdentifier(str, "drawable", getActivity().getPackageName());
+            }
+            switch (mBtnSelected) {
+                case 0:
+                    btn = (ImageButton) getActivity().findViewById(R.id.imageButton1);
+                    break;
+                case 1:
+                    btn = (ImageButton) getActivity().findViewById(R.id.imageButton2);
+                    break;
+                case 2:
+                    btn = (ImageButton) getActivity().findViewById(R.id.imageButton3);
+                    break;
+                case 3:
+                    btn = (ImageButton) getActivity().findViewById(R.id.imageButton4);
+                    break;
+                case 4:
+                    btn = (ImageButton) getActivity().findViewById(R.id.imageButton5);
+                    break;
+                default:
+                    break;
+            }
+            if (drawable > 0) {
+                if (btn != null)
+                    btn.setImageResource(drawable);
+            }
         }
     }
 

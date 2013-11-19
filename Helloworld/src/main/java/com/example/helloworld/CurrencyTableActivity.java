@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class CurrencyTableActivity extends Activity {
     public ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
+    int btnSelected;
 
     public void onCreate(Bundle savedInstanceState) {
         HashMap<?, ?> hashMap = null;
@@ -25,11 +26,15 @@ public class CurrencyTableActivity extends Activity {
         ListView list = (ListView) findViewById(R.id.MyListView);
 
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("hashMap")) {
-            Object object = intent.getSerializableExtra("hashMap");
-            if (object instanceof  HashMap) {
-               hashMap = (HashMap) object;
+        Bundle a = intent.getExtras();
+        if (a != null) {
+            if (intent != null && a.containsKey("hashMap")) {
+                Object object = a.getSerializable("hashMap");
+                if (object instanceof  HashMap) {
+                   hashMap = (HashMap) object;
+                }
             }
+            btnSelected = a.getInt("btnSelected");
         }
 
         if (hashMap !=null && hashMap.size() > 0) {
@@ -46,9 +51,14 @@ public class CurrencyTableActivity extends Activity {
     }
 
     public void onItemClick(int mPosition) {
-        Intent data = new Intent(this, Helloworld.class);
-        data.putExtra("selectedItem", mPosition);
-        setResult(RESULT_OK, data);
-        startActivityForResult(data, RESULT_OK);
+        Intent intent = new Intent(this, Helloworld.class);
+        HashMap<String, String> data = mylist.get(mPosition);
+        Bundle bundle = new Bundle();
+        String country = data.get("Country");
+        bundle.putString("selectedItem", country);
+        bundle.putInt("btnSelected", btnSelected);
+        intent.putExtras(bundle);
+        //setResult(RESULT_OK, intent);
+        startActivityForResult(intent, RESULT_OK);
     }
 }

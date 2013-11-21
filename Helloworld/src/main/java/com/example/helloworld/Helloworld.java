@@ -1,10 +1,13 @@
 package com.example.helloworld;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -112,6 +115,10 @@ public class Helloworld extends ActionBarActivity {
     public static class PlaceholderFragment extends Fragment {
         String mSelectedItem;
         int mBtnSelected = -1;
+        int mTxtSelected = -1;
+        EditText [] textArray = new EditText[5];
+        ImageButton [] btnArray = new ImageButton[5];
+        String [] currency = new String[5];
 
         public void setSelectedItem(String str){
             mSelectedItem = str;
@@ -142,36 +149,25 @@ public class Helloworld extends ActionBarActivity {
                 drawable = getActivity().getResources().getIdentifier(str, "drawable", getActivity().getPackageName());
             }
 
-            EditText text1 = (EditText) getActivity().findViewById(R.id.editText1);
-            EditText text2 = (EditText) getActivity().findViewById(R.id.editText2);
-            EditText text3 = (EditText) getActivity().findViewById(R.id.editText3);
-            EditText text4 = (EditText) getActivity().findViewById(R.id.editText4);
-            EditText text5 = (EditText) getActivity().findViewById(R.id.editText5);
-            text1.setOnFocusChangeListener(new focusListener());
-            text2.setOnFocusChangeListener(new focusListener());
-            text3.setOnFocusChangeListener(new focusListener());
-            text4.setOnFocusChangeListener(new focusListener());
-            text5.setOnFocusChangeListener(new focusListener());
+            textArray[0] = (EditText) getActivity().findViewById(R.id.editText1);
+            textArray[1] = (EditText) getActivity().findViewById(R.id.editText2);
+            textArray[2] = (EditText) getActivity().findViewById(R.id.editText3);
+            textArray[3] = (EditText) getActivity().findViewById(R.id.editText4);
+            textArray[4] = (EditText) getActivity().findViewById(R.id.editText5);
 
-            switch (mBtnSelected) {
-                case 0:
-                    btn = (ImageButton) getActivity().findViewById(R.id.imageButton1);
-                    break;
-                case 1:
-                    btn = (ImageButton) getActivity().findViewById(R.id.imageButton2);
-                    break;
-                case 2:
-                    btn = (ImageButton) getActivity().findViewById(R.id.imageButton3);
-                    break;
-                case 3:
-                    btn = (ImageButton) getActivity().findViewById(R.id.imageButton4);
-                    break;
-                case 4:
-                    btn = (ImageButton) getActivity().findViewById(R.id.imageButton5);
-                    break;
-                default:
-                    break;
+            btnArray[0] = (ImageButton) getActivity().findViewById(R.id.imageButton1);
+            btnArray[1] = (ImageButton) getActivity().findViewById(R.id.imageButton2);
+            btnArray[2] = (ImageButton) getActivity().findViewById(R.id.imageButton3);
+            btnArray[3] = (ImageButton) getActivity().findViewById(R.id.imageButton4);
+            btnArray[4] = (ImageButton) getActivity().findViewById(R.id.imageButton5);
+
+            for (EditText text : textArray) {
+                text.setOnFocusChangeListener(new focusListener());
+                text.addTextChangedListener(new textWatcher());
             }
+
+            if (mBtnSelected >= 0 && mBtnSelected <= 4) btn = btnArray[mBtnSelected];
+
             if (drawable > 0) {
                 if (btn != null)
                     btn.setImageResource(drawable);
@@ -180,15 +176,30 @@ public class Helloworld extends ActionBarActivity {
         private class focusListener implements View.OnFocusChangeListener {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    if (view instanceof EditText) {
-                        EditText text = (EditText) view;
-                        if (text != null) {
-                            String str = text.getText().toString();
-                            Log.e(getActivity().getString(R.string.app_name), str);
-                        }
+            }
+        }
+        private class textWatcher implements TextWatcher {
+            public void afterTextChanged(Editable s) {
+                int i;
+                String str = s.toString();
+                Log.e(getActivity().getString(R.string.app_name), str);
+                for (i = 0; i < 5; i++) {
+                    if (textArray[i].getText().toString().equals(s.toString())) {
+                        mTxtSelected = i;
                     }
                 }
+                for (i = 0; i < 5; i++) {
+                    Drawable drawable = btnArray[i].getDrawable();
+                    getActivity().getResources().getResourceEntryName(id);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){
+
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count){
+
             }
         }
     }

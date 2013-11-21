@@ -5,11 +5,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -139,6 +141,18 @@ public class Helloworld extends ActionBarActivity {
                 str = mSelectedItem.toLowerCase(Locale.ENGLISH)+"_flag";
                 drawable = getActivity().getResources().getIdentifier(str, "drawable", getActivity().getPackageName());
             }
+
+            EditText text1 = (EditText) getActivity().findViewById(R.id.editText1);
+            EditText text2 = (EditText) getActivity().findViewById(R.id.editText2);
+            EditText text3 = (EditText) getActivity().findViewById(R.id.editText3);
+            EditText text4 = (EditText) getActivity().findViewById(R.id.editText4);
+            EditText text5 = (EditText) getActivity().findViewById(R.id.editText5);
+            text1.setOnFocusChangeListener(new focusListener());
+            text2.setOnFocusChangeListener(new focusListener());
+            text3.setOnFocusChangeListener(new focusListener());
+            text4.setOnFocusChangeListener(new focusListener());
+            text5.setOnFocusChangeListener(new focusListener());
+
             switch (mBtnSelected) {
                 case 0:
                     btn = (ImageButton) getActivity().findViewById(R.id.imageButton1);
@@ -161,6 +175,20 @@ public class Helloworld extends ActionBarActivity {
             if (drawable > 0) {
                 if (btn != null)
                     btn.setImageResource(drawable);
+            }
+        }
+        private class focusListener implements View.OnFocusChangeListener {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    if (view instanceof EditText) {
+                        EditText text = (EditText) view;
+                        if (text != null) {
+                            String str = text.getText().toString();
+                            Log.e(getActivity().getString(R.string.app_name), str);
+                        }
+                    }
+                }
             }
         }
     }

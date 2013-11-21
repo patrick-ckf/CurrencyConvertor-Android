@@ -8,11 +8,11 @@ import java.util.Locale;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
+//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+//import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -69,9 +69,9 @@ public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
     public Drawable getDrawableByCurrency(String currency) {
         Drawable drawable = null;
         String str = currency.toLowerCase(Locale.ENGLISH)+"_flag";
-        Log.e(activity.getString(R.string.app_name), str);
+        //Log.e(activity.getString(R.string.app_name), str);
         if (str != null)drawable = activity.getResources().getDrawable(activity.getResources().getIdentifier(str, "drawable", activity.getPackageName()));
-        Log.e(activity.getString(R.string.app_name), drawable.toString());
+        //Log.e(activity.getString(R.string.app_name), drawable.toString());
         return drawable;
     }
 
@@ -101,7 +101,7 @@ public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
         // Setting all values in listview
         country.setText(currencyToCountry(currency.get("Country")));
         String str = "1 EUR to " + currency.get("Rate") + " " + currency.get("Country");
-        Log.e(activity.getString(R.string.app_name), str);
+        //Log.e(activity.getString(R.string.app_name), str);
         rate.setText(str);
         thumb_image.setImageDrawable(getDrawableByCurrency(currency.get("Country")));
         vi.setOnClickListener(new OnItemClickListener(position));
@@ -110,7 +110,7 @@ public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        Log.v(activity.getString(R.string.app_name), "Row button clicked");
+        //Log.v(activity.getString(R.string.app_name), "Row button clicked");
     }
 
     private class OnItemClickListener implements View.OnClickListener {

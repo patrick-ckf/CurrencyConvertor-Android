@@ -3,7 +3,7 @@ package com.example.helloworld;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+//import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;

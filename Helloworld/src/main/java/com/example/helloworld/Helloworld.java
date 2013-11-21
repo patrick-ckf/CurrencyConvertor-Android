@@ -26,11 +26,16 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class Helloworld extends ActionBarActivity {
+public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
     private Map<String, Float> CurrencyMapping = new HashMap<String,Float>();
     String selectedItem;
     private int btnSelected = -1;
     PlaceholderFragment fragment = new PlaceholderFragment();
+
+    public void onTaskCompleted(Map<String, Float> map) {
+        setCurrencyMapping(map);
+        fragment.setCurrencyMapping(map);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +57,7 @@ public class Helloworld extends ActionBarActivity {
                 fragment.setBtnSelected(btnSelected);
             }
         }
-        new CurrencyXMLParser().execute("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
+        new CurrencyXMLParser(this).execute("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
     }
 
     @Override
@@ -113,12 +118,21 @@ public class Helloworld extends ActionBarActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+        private Map<String, Float> CurrencyMapping = new HashMap<String,Float>();
         String mSelectedItem;
         int mBtnSelected = -1;
         int mTxtSelected = -1;
         EditText [] textArray = new EditText[5];
         ImageButton [] btnArray = new ImageButton[5];
-        String [] currency = new String[5];
+        float [] rate = new float[5];
+
+        public void setCurrencyMapping(Map<String, Float> map) {
+            for (Map.Entry<String, Float> entry : map.entrySet()) {
+                String key = entry.getKey();
+                Float value = entry.getValue();
+                CurrencyMapping.put(key, value);
+            }
+        }
 
         public void setSelectedItem(String str){
             mSelectedItem = str;
@@ -128,9 +142,7 @@ public class Helloworld extends ActionBarActivity {
             mBtnSelected = btn;
         }
 
-
-        public PlaceholderFragment() {
-        }
+        public PlaceholderFragment() {}
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -156,10 +168,15 @@ public class Helloworld extends ActionBarActivity {
             textArray[4] = (EditText) getActivity().findViewById(R.id.editText5);
 
             btnArray[0] = (ImageButton) getActivity().findViewById(R.id.imageButton1);
+            btnArray[0].setTag(R.drawable.hkd_flag);
             btnArray[1] = (ImageButton) getActivity().findViewById(R.id.imageButton2);
+            btnArray[1].setTag(R.drawable.usd_flag);
             btnArray[2] = (ImageButton) getActivity().findViewById(R.id.imageButton3);
+            btnArray[2].setTag(R.drawable.jpy_flag);
             btnArray[3] = (ImageButton) getActivity().findViewById(R.id.imageButton4);
+            btnArray[3].setTag(R.drawable.gbp_flag);
             btnArray[4] = (ImageButton) getActivity().findViewById(R.id.imageButton5);
+            btnArray[4].setTag(R.drawable.bgn_flag);
 
             for (EditText text : textArray) {
                 text.setOnFocusChangeListener(new focusListener());
@@ -169,8 +186,10 @@ public class Helloworld extends ActionBarActivity {
             if (mBtnSelected >= 0 && mBtnSelected <= 4) btn = btnArray[mBtnSelected];
 
             if (drawable > 0) {
-                if (btn != null)
+                if (btn != null) {
                     btn.setImageResource(drawable);
+                    btn.setTag(drawable);
+                }
             }
         }
         private class focusListener implements View.OnFocusChangeListener {
@@ -189,8 +208,29 @@ public class Helloworld extends ActionBarActivity {
                     }
                 }
                 for (i = 0; i < 5; i++) {
-                    Drawable drawable = btnArray[i].getDrawable();
-                    getActivity().getResources().getResourceEntryName(id);
+                    int drawID = (Integer)btnArray[i].getTag();
+                    switch(drawID) {
+                        case R.drawable.cny_flag:
+                            rate[i] = CurrencyMapping.get("CNY");
+                            break;
+                        case R.drawable.hkd_flag:
+                            rate[i] = CurrencyMapping.get("HKD");
+                            break;
+                        case R.drawable.jpy_flag:
+                            rate[i] = CurrencyMapping.get("JPY");
+                            break;
+                        case R.drawable.gbp_flag:
+                            rate[i] = CurrencyMapping.get("GBP");
+                            break;
+                        case R.drawable.usd_flag:
+                            rate[i] = CurrencyMapping.get("USD");
+                            break;
+                        case R.drawable.bgn_flag:
+                            rate[i] = CurrencyMapping.get("BGN");
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
@@ -201,88 +241,6 @@ public class Helloworld extends ActionBarActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count){
 
             }
-        }
-    }
-
-    private class CurrencyXMLParser extends AsyncTask<String, Void, String> {
-
-        private Map<String, Float> CurrencyMapping = new HashMap<String,Float>();
-
-        //public Map<String, Float> getCurrencyMap() { return CurrencyMapping; }
-
-        private void insertCurrencyToMap(Map<String,String> attributes) {
-            if (attributes != null) {
-                String currency = attributes.get("currency");
-                String rate = attributes.get("rate");
-                if (currency !=null && rate != null) {
-                    CurrencyMapping.put(currency, Float.valueOf(rate));
-                }
-            }
-        }
-
-        private Map<String,String>  getAttributes(XmlPullParser parser) {
-            Map<String,String> attrs=null;
-            int account = parser.getAttributeCount();
-            if(account != -1) {
-                attrs = new HashMap<String,String>(account);
-                for(int x = 0; x < account;x++)  attrs.put(parser.getAttributeName(x), parser.getAttributeValue(x));
-            }
-            return attrs;
-        }
-
-        void parse(XmlPullParser xpParser) {
-            int eventType;
-            String strNode;
-            Map<String,String> attributes;
-            try {
-                eventType = xpParser.next();
-                while (eventType != XmlPullParser.END_DOCUMENT) {
-                    if(eventType == XmlPullParser.START_TAG) {
-                        strNode = xpParser.getName();
-                        if (strNode.compareTo("Cube") == 0) {
-                            eventType = xpParser.next();
-                            while (eventType != XmlPullParser.END_DOCUMENT) {
-                                if (eventType == XmlPullParser.START_TAG) {
-                                    attributes = getAttributes(xpParser);
-                                    insertCurrencyToMap(attributes);
-                                } else if(eventType == XmlPullParser.TEXT){
-                                    attributes = getAttributes(xpParser);
-                                    insertCurrencyToMap(attributes);
-                                } else if(eventType == XmlPullParser.END_TAG){
-                                    attributes = getAttributes(xpParser);
-                                    insertCurrencyToMap(attributes);
-                                }
-                                eventType = xpParser.next();
-                            }
-                        }
-                    }
-                    eventType = xpParser.next();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected String doInBackground(String... urls) {
-            String response = "";
-            try {
-                URL url = new URL(urls[0]);
-                InputStream is = url.openStream();
-
-                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-                XmlPullParser xpParser = factory.newPullParser();
-                xpParser.setInput(is,"utf-8");
-                parse(xpParser);
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Helloworld.this.setCurrencyMapping(CurrencyMapping);
         }
     }
 }

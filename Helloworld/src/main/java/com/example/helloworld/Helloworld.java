@@ -198,38 +198,141 @@ public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
             }
         }
         private class textWatcher implements TextWatcher {
+            
+                        private float getRateByBtn(ImageButton view) {
+                int drawID = (Integer)view.getTag();
+                float rate = 0;
+                if (CurrencyMapping.size() <= 0) rate = 0;
+                else {
+                    switch (drawID) {
+                        case R.drawable.usd_flag:
+                            rate = CurrencyMapping.get("USD");
+                            break;
+                        case R.drawable.jpy_flag:
+                            rate = CurrencyMapping.get("JPY");
+                            break;
+                        case R.drawable.bgn_flag:
+                            rate = CurrencyMapping.get("BGN");
+                            break;
+                        case R.drawable.czk_flag:
+                            rate = CurrencyMapping.get("CZK");
+                            break;
+                        case R.drawable.dkk_flag:
+                            rate = CurrencyMapping.get("DKK");
+                            break;
+                        case R.drawable.gbp_flag:
+                            rate = CurrencyMapping.get("GBP");
+                            break;
+                        case R.drawable.huf_flag:
+                            rate = CurrencyMapping.get("HUF");
+                            break;
+                        case R.drawable.ltl_flag:
+                            rate = CurrencyMapping.get("LTL");
+                            break;
+                        case R.drawable.lvl_flag:
+                            rate = CurrencyMapping.get("LVL");
+                            break;
+                        case R.drawable.pln_flag:
+                            rate = CurrencyMapping.get("PLN");
+                            break;
+                        case R.drawable.ron_flag:
+                            rate = CurrencyMapping.get("RON");
+                            break;
+                        case R.drawable.sek_flag:
+                            rate = CurrencyMapping.get("SEK");
+                            break;
+                        case R.drawable.chf_flag:
+                            rate = CurrencyMapping.get("CHF");
+                            break;
+                        case R.drawable.nok_flag:
+                            rate = CurrencyMapping.get("NOK");
+                            break;
+                        case R.drawable.hrk_flag:
+                            rate = CurrencyMapping.get("HRK");
+                            break;
+                        case R.drawable.rub_flag:
+                            rate = CurrencyMapping.get("RUB");
+                            break;
+                        case R.drawable.try_flag:
+                            rate = CurrencyMapping.get("TRY");
+                            break;
+                        case R.drawable.aud_flag:
+                            rate = CurrencyMapping.get("AUD");
+                            break;
+                        case R.drawable.brl_flag:
+                            rate = CurrencyMapping.get("BRL");
+                            break;
+                        case R.drawable.cad_flag:
+                            rate = CurrencyMapping.get("CAD");
+                            break;
+                        case R.drawable.cny_flag:
+                            rate = CurrencyMapping.get("CNY");
+                            break;
+                        case R.drawable.hkd_flag:
+                            rate = CurrencyMapping.get("HKD");
+                            break;
+                        case R.drawable.idr_flag:
+                            rate = CurrencyMapping.get("IDR");
+                            break;
+                        case R.drawable.ils_flag:
+                            rate = CurrencyMapping.get("ILS");
+                            break;
+                        case R.drawable.inr_flag:
+                            rate = CurrencyMapping.get("INR");
+                            break;
+                        case R.drawable.krw_flag:
+                            rate = CurrencyMapping.get("KRW");
+                            break;
+                        case R.drawable.mxn_flag:
+                            rate = CurrencyMapping.get("MXN");
+                            break;
+                        case R.drawable.myr_flag:
+                            rate = CurrencyMapping.get("MYR");
+                            break;
+                        case R.drawable.nzd_flag:
+                            rate = CurrencyMapping.get("NZD");
+                            break;
+                        case R.drawable.php_flag:
+                            rate = CurrencyMapping.get("PHP");
+                            break;
+                        case R.drawable.sgd_flag:
+                            rate = CurrencyMapping.get("SGD");
+                            break;
+                        case R.drawable.thb_flag:
+                            rate = CurrencyMapping.get("THB");
+                            break;
+                        case R.drawable.zar_flag:
+                            rate = CurrencyMapping.get("ZAR");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                return rate;
+            }
+            
             public void afterTextChanged(Editable s) {
                 int i;
+                int amount = -1;
                 String str = s.toString();
                 Log.e(getActivity().getString(R.string.app_name), str);
                 for (i = 0; i < 5; i++) {
                     if (textArray[i].getText().toString().equals(s.toString())) {
                         mTxtSelected = i;
+                        amount = Integer.valueOf(s.toString());
                     }
                 }
                 for (i = 0; i < 5; i++) {
                     int drawID = (Integer)btnArray[i].getTag();
-                    switch(drawID) {
-                        case R.drawable.cny_flag:
-                            rate[i] = CurrencyMapping.get("CNY");
-                            break;
-                        case R.drawable.hkd_flag:
-                            rate[i] = CurrencyMapping.get("HKD");
-                            break;
-                        case R.drawable.jpy_flag:
-                            rate[i] = CurrencyMapping.get("JPY");
-                            break;
-                        case R.drawable.gbp_flag:
-                            rate[i] = CurrencyMapping.get("GBP");
-                            break;
-                        case R.drawable.usd_flag:
-                            rate[i] = CurrencyMapping.get("USD");
-                            break;
-                        case R.drawable.bgn_flag:
-                            rate[i] = CurrencyMapping.get("BGN");
-                            break;
-                        default:
-                            break;
+                    rate[i] = getRateByBtn(btnArray[i]);
+                    if (amount > 0) {
+                        if (i != mTxtSelected) {
+                            float output = amount*(rate[mTxtSelected]/rate[i]);
+                            Log.e(getActivity().getString(R.string.app_name), output);
+                            String displayString = String.format("%.02f", output);
+                            Log.e(getActivity().getString(R.string.app_name), displayString);
+                            textArray[i].setText(displayString);
+                        }
                     }
                 }
             }

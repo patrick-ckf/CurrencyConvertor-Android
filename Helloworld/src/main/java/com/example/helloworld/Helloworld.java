@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -122,9 +123,20 @@ public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
         String mSelectedItem;
         int mBtnSelected = -1;
         int mTxtSelected = -1;
+        boolean ignoreNextTextChange = false;
         EditText [] textArray = new EditText[5];
         ImageButton [] btnArray = new ImageButton[5];
         float [] rate = new float[5];
+
+        public PlaceholderFragment() {}
+
+        public void setSelectedItem(String str){
+            mSelectedItem = str;
+        }
+        public void setBtnSelected(int btn) { mBtnSelected = btn; }
+
+        public boolean IsIgnoreNextTextChange() { return ignoreNextTextChange; }
+        public void SetIgnoreNextTextChange(boolean _ignoreNextTextChange) { ignoreNextTextChange = _ignoreNextTextChange; }
 
         public void setCurrencyMapping(Map<String, Float> map) {
             for (Map.Entry<String, Float> entry : map.entrySet()) {
@@ -133,16 +145,6 @@ public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
                 CurrencyMapping.put(key, value);
             }
         }
-
-        public void setSelectedItem(String str){
-            mSelectedItem = str;
-        }
-
-        public void setBtnSelected(int btn) {
-            mBtnSelected = btn;
-        }
-
-        public PlaceholderFragment() {}
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -180,7 +182,7 @@ public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
 
             for (EditText text : textArray) {
                 text.setOnFocusChangeListener(new focusListener());
-                text.addTextChangedListener(new textWatcher());
+                text.addTextChangedListener(new textWatcher(this));
             }
 
             if (mBtnSelected >= 0 && mBtnSelected <= 4) btn = btnArray[mBtnSelected];
@@ -198,8 +200,16 @@ public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
             }
         }
         private class textWatcher implements TextWatcher {
-            
-                        private float getRateByBtn(ImageButton view) {
+            PlaceholderFragment fragment;
+            int fromCurrency;
+
+            public textWatcher(Object t) {
+                if (t instanceof  PlaceholderFragment) {
+                    fragment = (PlaceholderFragment)t;
+                }
+            }
+
+            private float getRateByBtn(ImageButton view) {
                 int drawID = (Integer)view.getTag();
                 float rate = 0;
                 if (CurrencyMapping.size() <= 0) rate = 0;
@@ -311,38 +321,37 @@ public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
                 return rate;
             }
             
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s) {}
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){ }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count){
                 int i;
-                int amount = -1;
-                String str = s.toString();
-                Log.e(getActivity().getString(R.string.app_name), str);
-                for (i = 0; i < 5; i++) {
-                    if (textArray[i].getText().toString().equals(s.toString())) {
-                        mTxtSelected = i;
-                        amount = Integer.valueOf(s.toString());
-                    }
+                if (fragment.IsIgnoreNextTextChange()) {
+                    fragment.SetIgnoreNextTextChange(false);
+                    return;
                 }
                 for (i = 0; i < 5; i++) {
-                    int drawID = (Integer)btnArray[i].getTag();
-                    rate[i] = getRateByBtn(btnArray[i]);
-                    if (amount > 0) {
-                        if (i != mTxtSelected) {
-                            float output = amount*(rate[mTxtSelected]/rate[i]);
-                            Log.e(getActivity().getString(R.string.app_name), output);
-                            String displayString = String.format("%.02f", output);
-                            Log.e(getActivity().getString(R.string.app_name), displayString);
-                            textArray[i].setText(displayString);
+                    if (textArray[i].getText().toString().equals(s.toString())) {
+                        String str = s.toString();
+                        mTxtSelected = i;
+                        if (!str.isEmpty()) {
+                            float temp = Float.valueOf(str);
+                            fromCurrency = (int)temp;
                         }
                     }
                 }
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after){
-
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count){
-
+                for (i = 0; i < 5; i++) rate[i] = getRateByBtn(btnArray[i]);
+                for (i = 0; i < 5; i++) {
+                    if (fromCurrency > 0) {
+                        if (i != mTxtSelected) {
+                            float output = fromCurrency*(rate[mTxtSelected]/rate[i]);
+                            String displayString = String.format("%.02f", output);
+                            fragment.SetIgnoreNextTextChange(true);
+                            textArray[i].setText(displayString, TextView.BufferType.EDITABLE);
+                        }
+                    }
+                }
             }
         }
     }

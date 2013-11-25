@@ -10,14 +10,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by patrick on 13年11月22日.
- */
 public class CurrencyXMLParser extends AsyncTask<String, Void, String> {
     private OnTaskCompleted listener;
     private Map<String, Float> CurrencyMapping = new HashMap<String,Float>();
-
-    public Map<String, Float> getCurrencyMap() { return CurrencyMapping; }
 
     public CurrencyXMLParser(OnTaskCompleted listener) {
         this.listener = listener;

@@ -1,14 +1,11 @@
 package com.example.helloworld;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,12 +14,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -124,9 +115,9 @@ public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
         int mBtnSelected = -1;
         int mTxtSelected = -1;
         boolean ignoreNextTextChange = false;
-        EditText [] textArray = new EditText[5];
-        ImageButton [] btnArray = new ImageButton[5];
-        float [] rate = new float[5];
+        EditText [] textArray = new EditText[Global.ListSize];
+        ImageButton [] btnArray = new ImageButton[Global.ListSize];
+        float [] rate = new float[Global.ListSize];
 
         public PlaceholderFragment() {}
 
@@ -168,6 +159,8 @@ public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
             textArray[2] = (EditText) getActivity().findViewById(R.id.editText3);
             textArray[3] = (EditText) getActivity().findViewById(R.id.editText4);
             textArray[4] = (EditText) getActivity().findViewById(R.id.editText5);
+            textArray[5] = (EditText) getActivity().findViewById(R.id.editText6);
+            textArray[6] = (EditText) getActivity().findViewById(R.id.editText7);
 
             btnArray[0] = (ImageButton) getActivity().findViewById(R.id.imageButton1);
             btnArray[0].setTag(R.drawable.hkd_flag);
@@ -179,13 +172,17 @@ public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
             btnArray[3].setTag(R.drawable.gbp_flag);
             btnArray[4] = (ImageButton) getActivity().findViewById(R.id.imageButton5);
             btnArray[4].setTag(R.drawable.bgn_flag);
+            btnArray[5] = (ImageButton) getActivity().findViewById(R.id.imageButton6);
+            btnArray[5].setTag(R.drawable.cny_flag);
+            btnArray[6] = (ImageButton) getActivity().findViewById(R.id.imageButton7);
+            btnArray[6].setTag(R.drawable.aud_flag);
 
             for (EditText text : textArray) {
                 text.setOnFocusChangeListener(new focusListener());
                 text.addTextChangedListener(new textWatcher(this));
             }
 
-            if (mBtnSelected >= 0 && mBtnSelected <= 4) btn = btnArray[mBtnSelected];
+            if (mBtnSelected >= 0 && mBtnSelected <= Global.ListSize-1) btn = btnArray[mBtnSelected];
 
             if (drawable > 0) {
                 if (btn != null) {
@@ -331,7 +328,7 @@ public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
                     fragment.SetIgnoreNextTextChange(false);
                     return;
                 }
-                for (i = 0; i < 5; i++) {
+                for (i = 0; i < Global.ListSize; i++) {
                     if (textArray[i].getText().toString().equals(s.toString())) {
                         String str = s.toString();
                         mTxtSelected = i;
@@ -341,8 +338,8 @@ public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
                         }
                     }
                 }
-                for (i = 0; i < 5; i++) rate[i] = getRateByBtn(btnArray[i]);
-                for (i = 0; i < 5; i++) {
+                for (i = 0; i < Global.ListSize; i++) rate[i] = getRateByBtn(btnArray[i]);
+                for (i = 0; i < Global.ListSize; i++) {
                     if (fromCurrency > 0) {
                         if (i != mTxtSelected) {
                             float output = fromCurrency*(rate[mTxtSelected]/rate[i]);

@@ -58,7 +58,6 @@ public class CurrencyTableActivity extends Activity {
         bundle.putString("selectedItem", country);
         bundle.putInt("btnSelected", btnSelected);
         intent.putExtras(bundle);
-        //setResult(RESULT_OK, intent);
         startActivityForResult(intent, RESULT_OK);
     }
 }

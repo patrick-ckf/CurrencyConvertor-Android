@@ -67,12 +67,8 @@ public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
     }
 
     public Drawable getDrawableByCurrency(String currency) {
-        Drawable drawable = null;
         String str = currency.toLowerCase(Locale.ENGLISH)+"_flag";
-        //Log.e(activity.getString(R.string.app_name), str);
-        if (str != null)drawable = activity.getResources().getDrawable(activity.getResources().getIdentifier(str, "drawable", activity.getPackageName()));
-        //Log.e(activity.getString(R.string.app_name), drawable.toString());
-        return drawable;
+        return activity.getResources().getDrawable(activity.getResources().getIdentifier(str, "drawable", activity.getPackageName()));
     }
 
     public int getCount() {
@@ -95,13 +91,11 @@ public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
         TextView rate = (TextView)vi.findViewById(R.id.rate);
         ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image);
 
-        HashMap<String, String> currency = new HashMap<String, String>();
-        currency = data.get(position);
+        HashMap<String, String> currency = data.get(position);
 
         // Setting all values in listview
         country.setText(currencyToCountry(currency.get("Country")));
         String str = "1 EUR to " + currency.get("Rate") + " " + currency.get("Country");
-        //Log.e(activity.getString(R.string.app_name), str);
         rate.setText(str);
         thumb_image.setImageDrawable(getDrawableByCurrency(currency.get("Country")));
         vi.setOnClickListener(new OnItemClickListener(position));
@@ -109,9 +103,7 @@ public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
     }
 
     @Override
-    public void onClick(View view) {
-        //Log.v(activity.getString(R.string.app_name), "Row button clicked");
-    }
+    public void onClick(View view) { }
 
     private class OnItemClickListener implements View.OnClickListener {
         private int mPosition = 0;
@@ -125,6 +117,5 @@ public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
             CurrencyTableActivity act = (CurrencyTableActivity)activity;
             act.onItemClick(mPosition);
         }
-
-    };
+    }
 }

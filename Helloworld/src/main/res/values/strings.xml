@@ -9,6 +9,8 @@
     <string name="currency3">currency3</string>
     <string name="currency4">currency4</string>
     <string name="currency5">currency5</string>
+    <string name="currency6">currency6</string>
+    <string name="currency7">currency7</string>
     <string name="list_view_title">Currency Listing</string>
     <string name="next_btn"> next button </string>
     <string name="country">China></string>

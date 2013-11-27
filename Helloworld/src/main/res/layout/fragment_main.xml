@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton1"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency1"
+        android:src="@drawable/hkd_flag"
+        android:onClick="onClick" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton2"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency2"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/usd_flag"
+        android:onClick="onClick" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton3"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency3"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/jpy_flag"
+        android:onClick="onClick" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton4"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency4"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/gbp_flag"
+        android:onClick="onClick" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton5"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency5"
+        android:layout_marginTop="200dp"
+        android:src="@drawable/bgn_flag"
+        android:onClick="onClick" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton6"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency6"
+        android:layout_marginTop="250dp"
+        android:src="@drawable/cny_flag"
+        android:onClick="onClick" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton7"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency7"
+        android:layout_marginTop="300dp"
+        android:src="@drawable/aud_flag"
+        android:onClick="onClick" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText1"
+        android:layout_gravity="right|top"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="50dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText3"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="100dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText4"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="150dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText5"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="200dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText6"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="250dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText7"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="300dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+</FrameLayout>

@@ -12,6 +12,7 @@
         <option name="externalProjectPath" value="D:\cheung.patrick\AndroidStudioProjects" />
       </GradleProjectSettings>
     </option>
+    <option name="gradleVmOptions" value="-Dorg.gradle.jvmargs=-Xms128m -Xmx256m" />
   </component>
 </project>
 

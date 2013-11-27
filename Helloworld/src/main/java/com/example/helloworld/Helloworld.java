@@ -78,6 +78,12 @@ public class Helloworld extends ActionBarActivity implements OnTaskCompleted{
             case R.id.imageButton5:
                 btnSelected = 4;
                 break;
+            case R.id.imageButton6:
+                btnSelected = 5;
+                break;
+            case R.id.imageButton7:
+                btnSelected = 6;
+                break;
             default:
                 break;
         }

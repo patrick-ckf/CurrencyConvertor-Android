@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CurrencyConvertor-Android.iml" filepath="$PROJECT_DIR$/CurrencyConvertor-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/Helloworld.iml" filepath="$PROJECT_DIR$/Helloworld.iml" />
       <module fileurl="file://$PROJECT_DIR$/Helloworld/Helloworld.iml" filepath="$PROJECT_DIR$/Helloworld/Helloworld.iml" />
       <module fileurl="file://$PROJECT_DIR$/Helloworld/Helloworld-Helloworld.iml" filepath="$PROJECT_DIR$/Helloworld/Helloworld-Helloworld.iml" />

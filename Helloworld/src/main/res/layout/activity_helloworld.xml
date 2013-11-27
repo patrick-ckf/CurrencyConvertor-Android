@@ -6,4 +6,25 @@
     tools:context=".Currency Convertor"
     tools:ignore="MergeRootFrame" >
 
-    </FrameLayout>
+    <fragment
+        android:id="@+id/main_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="454dp"
+        android:name="com.jnpc.currencyconvertor.mainFragment"
+        tools:layout="@layout/fragment_main"
+        android:layout_gravity="left|top"
+        class="com.jnpc.currencyconvertor.mainFragment"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="-33dp">
+    </fragment>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adUnitId="@string/admob_id"
+        ads:adSize="BANNER"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="10dp" />
+</FrameLayout>

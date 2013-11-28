@@ -3,30 +3,37 @@ package com.jnpc.currencyconvertor;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.Window;
 import android.widget.ListView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CurrencyTableActivity extends Activity {
-    AdView adView;
+public class CurrencyTableActivity extends Activity implements OnQueryTextListener {
     public ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
+    public ArrayList<HashMap<String, String>> searchList;
     int btnSelected;
+    private ListView mListView;
+    private SearchView mSearchView;
+    CustomCurrencyListViewAdapter adapter;
 
     public void onCreate(Bundle savedInstanceState) {
         HashMap<?, ?> hashMap = null;
-        LazyAdapter adapter;
 
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 
         setTitle("Currency Listing");
 
         setContentView(R.layout.currency_table_activity);
-        ListView list = (ListView) findViewById(R.id.MyListView);
+        mListView = (ListView) findViewById(R.id.MyListView);
 
         Intent intent = getIntent();
         Bundle a = intent.getExtras();
@@ -49,40 +56,53 @@ public class CurrencyTableActivity extends Activity {
                 mylist.add(map);
             }
         }
-        adapter = new LazyAdapter(this, mylist);
-        list.setAdapter(adapter);
 
-        adView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        searchList = new ArrayList<HashMap<String,String>>(mylist);
+
+        adapter = new CustomCurrencyListViewAdapter(this, searchList);
+        mListView.setAdapter(adapter);
+
+        mListView.setTextFilterEnabled(true);
     }
 
-    public void onItemClick(int mPosition) {
-        Intent intent = new Intent(this, Helloworld.class);
-        HashMap<String, String> data = mylist.get(mPosition);
-        Bundle bundle = new Bundle();
-        String country = data.get("Country");
-        bundle.putString("selectedItem", country);
-        bundle.putInt("btnSelected", btnSelected);
-        intent.putExtras(bundle);
-        startActivityForResult(intent, RESULT_OK);
+    private void setupSearchView() {
+        mSearchView.setIconifiedByDefault(true);
+        mSearchView.setOnQueryTextListener(this);
+        mSearchView.setQueryHint("Search words...");
+        mSearchView.setSubmitButtonEnabled(false);
     }
 
     @Override
-    public void onPause() {
-        adView.pause();
-        super.onPause();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        MenuItem item = menu.findItem(R.id.search);
+        if (item != null) {
+            mSearchView = (SearchView) item.getActionView();
+        }
+        setupSearchView();
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        adView.resume();
+    public boolean onQueryTextChange(String queryText) {
+        if(TextUtils.isEmpty(queryText)) {
+            mListView.clearTextFilter();
+        } else {
+            int textLength = queryText.length();
+            searchList.clear();
+            for (HashMap<String, String> data : mylist) {
+                String countryName = data.get("Country");
+                if (queryText.equalsIgnoreCase(countryName.substring(0, textLength))) {
+                    searchList.add(data);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        return true;
     }
 
     @Override
-    public void onDestroy() {
-        adView.destroy();
-        super.onDestroy();
+    public boolean onQueryTextSubmit(String queryText) {
+        return false;
     }
 }

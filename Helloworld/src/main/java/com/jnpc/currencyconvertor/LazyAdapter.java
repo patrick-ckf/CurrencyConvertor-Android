@@ -114,7 +114,7 @@ public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
 
         @Override
         public void onClick(View view) {
-            CurrencyTableActivity act = (CurrencyTableActivity)activity;
+            Helloworld act = (Helloworld)activity;
             act.onItemClick(mPosition);
         }
     }

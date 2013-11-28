@@ -1,5 +1,6 @@
 package com.jnpc.currencyconvertor;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class mainFragment extends android.app.Fragment {
+    private View view;
     private Map<String, Float> CurrencyMapping = new HashMap<String,Float>();
     String mSelectedItem;
     int mBtnSelected = -1;
@@ -26,8 +29,6 @@ public class mainFragment extends android.app.Fragment {
 
     public mainFragment() {}
 
-    public void setSelectedItem(String str) { mSelectedItem = str; }
-    public void setBtnSelected(int btn) { mBtnSelected = btn; }
     public boolean IsIgnoreNextTextChange() { return ignoreNextTextChange; }
     public void SetIgnoreNextTextChange(boolean _ignoreNextTextChange) { ignoreNextTextChange = _ignoreNextTextChange; }
 
@@ -40,44 +41,92 @@ public class mainFragment extends android.app.Fragment {
     }
 
     @Override
+    public void onAttach(Activity act) {
+        super.onAttach(act);
+        if (act instanceof Helloworld) {
+            ((Helloworld) act).setCurrentFragmentID(R.layout.fragment_main);
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        if (view != null) {
+            Object obj = view.getLayoutParams();
+            if (obj instanceof  FrameLayout.LayoutParams) {
+                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) obj;
+                params.setMargins(-33,0,0,10);
+                view.setLayoutParams(params);
+            }
+        }
+
+
+        Bundle bundle = this.getArguments();
+        if (getArguments() != null) {
+            if (bundle != null) {
+                mSelectedItem = bundle.getString("selectedItem");
+                mBtnSelected = bundle.getInt("btnSelected");
+            }
+        }
+        return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         String str;
         int drawable = -1;
         ImageButton btn = null;
         if (mSelectedItem != null) {
             str = mSelectedItem.toLowerCase(Locale.ENGLISH)+"_flag";
-            drawable = getActivity().getResources().getIdentifier(str, "drawable", getActivity().getPackageName());
+            Activity act = getActivity();
+            if (act != null) {
+                drawable = act.getResources().getIdentifier(str, "drawable", getActivity().getPackageName());
+            }
         }
 
-        textArray[0] = (EditText) getActivity().findViewById(R.id.editText1);
-        textArray[1] = (EditText) getActivity().findViewById(R.id.editText2);
-        textArray[2] = (EditText) getActivity().findViewById(R.id.editText3);
-        textArray[3] = (EditText) getActivity().findViewById(R.id.editText4);
-        textArray[4] = (EditText) getActivity().findViewById(R.id.editText5);
-        textArray[5] = (EditText) getActivity().findViewById(R.id.editText6);
-        textArray[6] = (EditText) getActivity().findViewById(R.id.editText7);
+        if (view == null) {
+            return;
+        }
+        textArray[0] = (EditText) view.findViewById(R.id.editText1);
+        textArray[1] = (EditText) view.findViewById(R.id.editText2);
+        textArray[2] = (EditText) view.findViewById(R.id.editText3);
+        textArray[3] = (EditText) view.findViewById(R.id.editText4);
+        textArray[4] = (EditText) view.findViewById(R.id.editText5);
+        textArray[5] = (EditText) view.findViewById(R.id.editText6);
+        textArray[6] = (EditText) view.findViewById(R.id.editText7);
 
-        btnArray[0] = (ImageButton) getActivity().findViewById(R.id.imageButton1);
-        btnArray[0].setTag(R.drawable.hkd_flag);
-        btnArray[1] = (ImageButton) getActivity().findViewById(R.id.imageButton2);
-        btnArray[1].setTag(R.drawable.usd_flag);
-        btnArray[2] = (ImageButton) getActivity().findViewById(R.id.imageButton3);
-        btnArray[2].setTag(R.drawable.jpy_flag);
-        btnArray[3] = (ImageButton) getActivity().findViewById(R.id.imageButton4);
-        btnArray[3].setTag(R.drawable.gbp_flag);
-        btnArray[4] = (ImageButton) getActivity().findViewById(R.id.imageButton5);
-        btnArray[4].setTag(R.drawable.bgn_flag);
-        btnArray[5] = (ImageButton) getActivity().findViewById(R.id.imageButton6);
-        btnArray[5].setTag(R.drawable.cny_flag);
-        btnArray[6] = (ImageButton) getActivity().findViewById(R.id.imageButton7);
-        btnArray[6].setTag(R.drawable.aud_flag);
+        btnArray[0] = (ImageButton) view.findViewById(R.id.imageButton1);
+        if (btnArray[0] != null) {
+            btnArray[0].setTag(R.drawable.hkd_flag);
+        }
+        btnArray[1] = (ImageButton) view.findViewById(R.id.imageButton2);
+        if (btnArray[1] != null) {
+            btnArray[1].setTag(R.drawable.usd_flag);
+        }
+        btnArray[2] = (ImageButton) view.findViewById(R.id.imageButton3);
+        if (btnArray[2] != null) {
+            btnArray[2].setTag(R.drawable.jpy_flag);
+        }
+        btnArray[3] = (ImageButton) view.findViewById(R.id.imageButton4);
+        if (btnArray[3] != null) {
+            btnArray[3].setTag(R.drawable.gbp_flag);
+        }
+        btnArray[4] = (ImageButton) view.findViewById(R.id.imageButton5);
+        if (btnArray[4] != null) {
+            btnArray[4].setTag(R.drawable.bgn_flag);
+        }
+        btnArray[5] = (ImageButton) view.findViewById(R.id.imageButton6);
+        if (btnArray[5] != null) {
+            btnArray[5].setTag(R.drawable.cny_flag);
+        }
+        btnArray[6] = (ImageButton) view.findViewById(R.id.imageButton7);
+        if (btnArray[6] != null) {
+            btnArray[6].setTag(R.drawable.aud_flag);
+        }
 
         for (EditText text : textArray) {
             text.addTextChangedListener(new textWatcher(this));
@@ -226,12 +275,15 @@ public class mainFragment extends android.app.Fragment {
                 return;
             }
             for (i = 0; i < Global.ListSize; i++) {
-                if (textArray[i].getText().toString().equals(s.toString())) {
-                    String str = s.toString();
-                    mTxtSelected = i;
-                    if (!str.isEmpty()) {
-                        float temp = Float.valueOf(str);
-                        fromCurrency = (int)temp;
+                Editable edit = textArray[i].getText();
+                if (edit != null) {
+                    if (edit.toString().equals(s.toString())) {
+                        String str = s.toString();
+                        mTxtSelected = i;
+                        if (!str.isEmpty()) {
+                            float temp = Float.valueOf(str);
+                            fromCurrency = (int)temp;
+                        }
                     }
                 }
             }
@@ -239,7 +291,7 @@ public class mainFragment extends android.app.Fragment {
             for (i = 0; i < Global.ListSize; i++) {
                 if (fromCurrency > 0) {
                     if (i != mTxtSelected) {
-                        float output = fromCurrency*(rate[mTxtSelected]/rate[i]);
+                        float output = fromCurrency*(rate[i]/rate[mTxtSelected]);
                         String displayString = String.format("%.02f", output);
                         fragment.SetIgnoreNextTextChange(true);
                         textArray[i].setText(displayString, TextView.BufferType.EDITABLE);

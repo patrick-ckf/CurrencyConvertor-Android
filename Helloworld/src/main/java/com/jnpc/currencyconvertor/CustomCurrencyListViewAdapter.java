@@ -1,4 +1,4 @@
-package com.example.helloworld;
+package com.jnpc.currencyconvertor;
 
 
 import java.util.ArrayList;
@@ -6,27 +6,49 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.app.ListFragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-//import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
+public class CustomCurrencyListViewAdapter extends BaseAdapter implements View.OnClickListener{
 
+    private ListFragment fragment;
     private Activity activity;
     private ArrayList<HashMap<String, String>> data;
-    private static LayoutInflater inflater=null;
+    private static LayoutInflater inflater = null;
 
-    public LazyAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
+    // true - fragment
+    // false - activity
+    boolean activity_fragment = false;
+
+    public Helloworld customgGetActivity() {
+        if (activity_fragment) {
+            return (Helloworld)fragment.getActivity();
+        } else {
+            return (Helloworld)activity;
+        }
+    }
+
+    public CustomCurrencyListViewAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
+        activity_fragment = false;
         activity = a;
         data = d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public CustomCurrencyListViewAdapter(ListFragment a, ArrayList<HashMap<String, String>> d) {
+        activity_fragment = true;
+        fragment = a;
+        data = d;
+        Activity act = fragment.getActivity();
+        if (act != null)
+            inflater = (LayoutInflater)act.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public String currencyToCountry(String currency) {
@@ -68,7 +90,7 @@ public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
 
     public Drawable getDrawableByCurrency(String currency) {
         String str = currency.toLowerCase(Locale.ENGLISH)+"_flag";
-        return activity.getResources().getDrawable(activity.getResources().getIdentifier(str, "drawable", activity.getPackageName()));
+        return customgGetActivity().getResources().getDrawable(customgGetActivity().getResources().getIdentifier(str, "drawable", customgGetActivity().getPackageName()));
     }
 
     public int getCount() {
@@ -87,6 +109,7 @@ public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
         View vi = convertView;
         if (convertView == null) vi = inflater.inflate(R.layout.list_row, null);
 
+        if (vi == null) return null;
         TextView country = (TextView)vi.findViewById(R.id.country);
         TextView rate = (TextView)vi.findViewById(R.id.rate);
         ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image);
@@ -114,7 +137,7 @@ public class LazyAdapter extends BaseAdapter implements View.OnClickListener{
 
         @Override
         public void onClick(View view) {
-            CurrencyTableActivity act = (CurrencyTableActivity)activity;
+            Helloworld act = customgGetActivity();
             act.onItemClick(mPosition);
         }
     }

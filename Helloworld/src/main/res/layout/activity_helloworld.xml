@@ -6,17 +6,12 @@
     tools:context=".Currency Convertor"
     tools:ignore="MergeRootFrame" >
 
-    <fragment
-        android:id="@+id/main_fragment"
+    <FrameLayout
+        android:id="@+id/contentFragment"
         android:layout_width="fill_parent"
-        android:layout_height="454dp"
-        android:name="com.jnpc.currencyconvertor.mainFragment"
-        tools:layout="@layout/fragment_main"
+        android:layout_height="450dp"
         android:layout_gravity="left|top"
-        class="com.jnpc.currencyconvertor.mainFragment"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="-33dp">
-    </fragment>
+        />
 
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"

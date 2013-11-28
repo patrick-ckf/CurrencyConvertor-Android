@@ -84,6 +84,7 @@ public class CurrencyXMLParser extends AsyncTask<String, Void, String> {
             parse(xpParser);
         } catch(Exception e) {
             e.printStackTrace();
+            listener.retryDownloadingXML();
         }
         return response;
     }

@@ -15,4 +15,6 @@
     <string name="next_btn"> next button </string>
     <string name="country">China></string>
     <string name="admob_id">828650e8086b4e2b</string>
+    <string name="search_label">Search</string>
+    <string name="search_hint">Search Names</string>
 </resources>

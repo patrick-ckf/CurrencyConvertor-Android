@@ -78,6 +78,28 @@
         android:src="@drawable/aud_flag"
         android:onClick="onClick" />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton8"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency7"
+        android:layout_marginTop="350dp"
+        android:src="@drawable/php_flag"
+        android:onClick="onClick" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton9"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="@dimen/abc_action_button_min_width"
+        android:contentDescription="@string/currency7"
+        android:layout_marginTop="400dp"
+        android:src="@drawable/krw_flag"
+        android:onClick="onClick" />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -153,4 +175,27 @@
         android:layout_marginTop="300dp"
         android:focusable="true"
         android:focusableInTouchMode="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText8"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="350dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText9"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="400dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
 </FrameLayout>

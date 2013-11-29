@@ -98,6 +98,8 @@ public class mainFragment extends android.app.Fragment {
         textArray[4] = (EditText) view.findViewById(R.id.editText5);
         textArray[5] = (EditText) view.findViewById(R.id.editText6);
         textArray[6] = (EditText) view.findViewById(R.id.editText7);
+        textArray[7] = (EditText) view.findViewById(R.id.editText8);
+        textArray[8] = (EditText) view.findViewById(R.id.editText9);
 
         btnArray[0] = (ImageButton) view.findViewById(R.id.imageButton1);
         if (btnArray[0] != null) {
@@ -126,6 +128,14 @@ public class mainFragment extends android.app.Fragment {
         btnArray[6] = (ImageButton) view.findViewById(R.id.imageButton7);
         if (btnArray[6] != null) {
             btnArray[6].setTag(R.drawable.aud_flag);
+        }
+        btnArray[7] = (ImageButton) view.findViewById(R.id.imageButton8);
+        if (btnArray[7] != null) {
+            btnArray[7].setTag(R.drawable.php_flag);
+        }
+        btnArray[8] = (ImageButton) view.findViewById(R.id.imageButton9);
+        if (btnArray[8] != null) {
+            btnArray[8].setTag(R.drawable.krw_flag);
         }
 
         for (EditText text : textArray) {

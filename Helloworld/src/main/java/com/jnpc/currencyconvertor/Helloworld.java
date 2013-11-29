@@ -73,7 +73,7 @@ public class Helloworld extends Activity implements OnTaskCompleted, OnQueryText
 
             adView.loadAd(adRequest);
         }
-        retryDownloadingXML(); //new CurrencyXMLParser(this).execute("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
+        retryDownloadingXML();
     }
 
     @Override
@@ -111,6 +111,12 @@ public class Helloworld extends Activity implements OnTaskCompleted, OnQueryText
                 break;
             case R.id.imageButton7:
                 btnSelected = 6;
+                break;
+            case R.id.imageButton8:
+                btnSelected = 7;
+                break;
+            case R.id.imageButton9:
+                btnSelected = 8;
                 break;
             default:
                 break;

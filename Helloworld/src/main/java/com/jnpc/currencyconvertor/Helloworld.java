@@ -36,6 +36,7 @@ public class Helloworld extends Activity implements OnTaskCompleted, OnQueryText
 
     public void retryDownloadingXML() {
         new CurrencyXMLParser(this).execute("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
+        new XMLDownloader().execute("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
     }
 
     public void setCurrentFragmentID(int id) {

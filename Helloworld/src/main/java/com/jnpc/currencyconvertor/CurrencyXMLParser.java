@@ -42,6 +42,7 @@ public class CurrencyXMLParser extends AsyncTask<String, Void, String> {
         int eventType;
         String strNode;
         Map<String,String> attributes;
+
         try {
             eventType = xpParser.next();
             while (eventType != XmlPullParser.END_DOCUMENT) {
